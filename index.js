@@ -146,6 +146,11 @@ class Instructor extends Lambdasian{
   grade(student, subject){
     return `${student.name} receives a perfect score on ${subject}`
   }
+  adjustGrade(student){
+    let randomNumber = Math.floor(Math.random() * 41) - 10;
+    student.grade += randomNumber;
+    return `${this.name} adjusts ${student.name}'s grade by ${randomNumber}! ${student.name}'s new grade is ${student.grade}.`; 
+  }
 }
 
 /*
@@ -169,6 +174,7 @@ class Student extends Lambdasian{
     this.previousBackground = attributes.previousBackground;
     this.className = attributes.className;
     this.favSubjects = attributes.favSubjects;
+    this.grade = attributes.grade;
   }
   listSubjects(){
     return `Loving ${this.favSubjects}`;
@@ -178,6 +184,13 @@ class Student extends Lambdasian{
   }
   sprintChallenge(subject){
     return `${this.name} has begun sprint challenge on ${subject}`
+  }
+  graduate(){
+    if (this.grade > 70){
+      return `${this.name} has graduated!`
+    } else {
+      return `${this.name}'s grade is ${this.grade}. Not quite ready to graduate!`
+    }
   }
 }
 
@@ -216,6 +229,49 @@ class ProjectManager extends Instructor{
       + This method, when called, will check the grade of the student and see if they're ready to graduate from Lambda School
       + If the student's grade is above a 70% let them graduate! Otherwise go back to grading their assignments to increase their score.
 */
+
+const santa = new Student({
+  name: 'Santa Claus',
+  age: 500,
+  location: 'North Pole',
+  previousBackground: 'Insurance Broker',
+  className: 'Web35',
+  favSubjects: ['Arrays', 'Classes', 'Objects'],
+  grade: 50,
+})
+
+const mrsClaus = new Instructor({
+  name: 'Mrs. Claus',
+  age: 501,
+  location: 'North Pole',
+  specialty: 'Algorithms',
+  favLanguage: 'Binary',
+  catchPhrase: 'Ho ho ho',
+})
+
+const rudolph = new ProjectManager({
+  name: 'Rudolph',
+  age: 150,
+  location: 'North Pole',
+  specialty: 'Logarithms',
+  favLanguage: 'Java',
+  catchPhrase: 'Had a very shiny nose',
+  gradClassName: 'WEB01',
+  favInstructor: 'Mrs. Claus',
+})
+
+console.log(santa);
+console.log(mrsClaus);
+console.log(rudolph);
+
+console.log(santa.graduate());
+console.log(mrsClaus.adjustGrade(santa));
+console.log(santa.graduate())
+console.log(rudolph.adjustGrade(santa));
+console.log(santa.graduate());
+console.log(rudolph.adjustGrade(santa));
+console.log(santa.graduate());
+
 
 ///////// END OF CHALLENGE /////////
 ///////// END OF CHALLENGE /////////

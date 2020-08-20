@@ -98,34 +98,6 @@ class Car {
 
 /*
   TASK 3
-    - Write a Baby constructor subclassing Person.
-    - Besides `name` and `age`, Baby takes a third argument to initialize `favoriteToy`.
-    - Besides the methods on Person.prototype, babies have the ability to `.play()`:
-        + Should return a string "Playing with x", x being the favorite toy.
-*/
-// function Baby(name, age, favoriteToy) {
-//   Person.call(this, name, age);
-//   this.favoriteToy = favoriteToy;
-// }
-
-// Baby.prototype = Object.create(Person.prototype);
-// Baby.prototype.play = function () {
-//   return `Playing with ${this.favoriteToy}`;
-// };
-
-class Baby extends Person{
-  constructor(name, age, favoriteToy){
-    super(name, age);
-    this.favoriteToy = favoriteToy;
-    
-  }
-  play() {
-    return `Playing with ${this.favoriteToy}`;
-  };
-}
-
-/*
-  TASK 3
     - Write a Lambdasian class.
     - Its constructor takes a single argument - an object with the following keys:
         + name
@@ -137,7 +109,14 @@ class Baby extends Person{
         + {name} and {location} of course come from the instance's own properties.
 */
 class Lambdasian {
-
+  constructor(attributes){
+    this.name = attributes.name;
+    this.age = attributes.age;
+    this.location = attributes.location;
+  }
+  speak(){
+    return `Hello my name is ${this.name}, I am from ${this.location}.`
+  }
 }
 
 /*

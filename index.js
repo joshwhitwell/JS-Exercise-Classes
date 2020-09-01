@@ -41,7 +41,22 @@ class Airplane {
 */
 
 class Person {
-
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+    this.stomach = [];
+  }
+  eat(food) {
+    if (this.stomach.length < 10) {
+      this.stomach.push(food);
+    }
+  }
+  poop() {
+    this.stomach = [];
+  }
+  toString() {
+    return `${this.name}, ${this.age}`;
+  };
 }
 
 /*
@@ -59,7 +74,26 @@ class Person {
 */
 
 class Car {
-
+  constructor(model, milesPerGallon){
+    this.model = model;
+    this.milesPerGallon = milesPerGallon;
+    this.tank = 0;
+    this.odometer = 0;
+  }
+  fill(gallons) {
+    this.tank += gallons;
+  }
+  drive(distance){
+    let drivableMiles = this.tank * this.milesPerGallon;
+    if (distance <= drivableMiles) {
+      this.odometer += distance;
+      this.tank -= distance / this.milesPerGallon;
+    } else if (distance > drivableMiles) {
+      this.odometer += drivableMiles;
+      this.tank = 0;
+      return `I ran out of fuel at ${this.odometer} miles!`;
+    }
+  }
 }
 
 /*
@@ -75,7 +109,14 @@ class Car {
         + {name} and {location} of course come from the instance's own properties.
 */
 class Lambdasian {
-
+  constructor(attributes){
+    this.name = attributes.name;
+    this.age = attributes.age;
+    this.location = attributes.location;
+  }
+  speak(){
+    return `Hello my name is ${this.name}, I am from ${this.location}.`
+  }
 }
 
 /*
@@ -92,8 +133,24 @@ class Lambdasian {
         + `demo` receives a `subject` string as an argument and returns the phrase 'Today we are learning about {subject}' where subject is the param passed in.
         + `grade` receives a `student` object and a `subject` string as arguments and returns '{student.name} receives a perfect score on {subject}'
 */
-class Instructor {
-
+class Instructor extends Lambdasian{
+  constructor(attributes){
+    super(attributes);
+    this.specialty = attributes.specialty;
+    this.favLanguage = attributes.favLanguage;
+    this.catchPhrase = attributes.catchPhrase;
+  }
+  demo(subject){
+    return `Today we are learning about ${subject}`;
+  }
+  grade(student, subject){
+    return `${student.name} receives a perfect score on ${subject}`
+  }
+  adjustGrade(student){
+    let randomNumber = Math.floor(Math.random() * 41) - 10;
+    student.grade += randomNumber;
+    return `${this.name} adjusts ${student.name}'s grade by ${randomNumber}! ${student.name}'s new grade is ${student.grade}.`; 
+  }
 }
 
 /*
@@ -111,8 +168,30 @@ class Instructor {
         + `PRAssignment` a method that receives a subject as an argument and returns `student.name has submitted a PR for {subject}`
         + `sprintChallenge` similar to PRAssignment but returns `student.name has begun sprint challenge on {subject}`
 */
-class Student {
-
+class Student extends Lambdasian{
+  constructor(attributes){
+    super(attributes);
+    this.previousBackground = attributes.previousBackground;
+    this.className = attributes.className;
+    this.favSubjects = attributes.favSubjects;
+    this.grade = attributes.grade;
+  }
+  listSubjects(){
+    return `Loving ${this.favSubjects}`;
+  }
+  PRAssignment(subject){
+    return `${this.name} has submitted a PR for ${subject}`;
+  }
+  sprintChallenge(subject){
+    return `${this.name} has begun sprint challenge on ${subject}`
+  }
+  graduate(){
+    if (this.grade > 70){
+      return `${this.name} has graduated!`
+    } else {
+      return `${this.name}'s grade is ${this.grade}. Not quite ready to graduate!`
+    }
+  }
 }
 
 /*
@@ -128,8 +207,18 @@ class Student {
         + `standUp` a method that takes in a slack channel and returns `{name} announces to {channel}, @channel standy times!`
         + `debugsCode` a method that takes in a student object and a subject and returns `{name} debugs {student.name}'s code on {subject}`
 */
-class ProjectManager {
-
+class ProjectManager extends Instructor{
+  constructor(attributes){
+    super(attributes);
+    this.gradClassName = attributes.gradClassName;
+    this.favInstructor = attributes.favInstructor;
+  }
+  standUp(channel){
+    return `${this.name} announces to ${channel}, @channel standy times!`
+  }
+  debugsCode(student, subject){
+    return `${this.name} debugs ${student.name}'s code on ${subject}`
+  }
 }
 
 /*
@@ -140,6 +229,49 @@ class ProjectManager {
       + This method, when called, will check the grade of the student and see if they're ready to graduate from Lambda School
       + If the student's grade is above a 70% let them graduate! Otherwise go back to grading their assignments to increase their score.
 */
+
+const santa = new Student({
+  name: 'Santa Claus',
+  age: 500,
+  location: 'North Pole',
+  previousBackground: 'Insurance Broker',
+  className: 'Web35',
+  favSubjects: ['Arrays', 'Classes', 'Objects'],
+  grade: 50,
+})
+
+const mrsClaus = new Instructor({
+  name: 'Mrs. Claus',
+  age: 501,
+  location: 'North Pole',
+  specialty: 'Algorithms',
+  favLanguage: 'Binary',
+  catchPhrase: 'Ho ho ho',
+})
+
+const rudolph = new ProjectManager({
+  name: 'Rudolph',
+  age: 150,
+  location: 'North Pole',
+  specialty: 'Logarithms',
+  favLanguage: 'Java',
+  catchPhrase: 'Had a very shiny nose',
+  gradClassName: 'WEB01',
+  favInstructor: 'Mrs. Claus',
+})
+
+console.log(santa);
+console.log(mrsClaus);
+console.log(rudolph);
+
+console.log(santa.graduate());
+console.log(mrsClaus.adjustGrade(santa));
+console.log(santa.graduate())
+console.log(rudolph.adjustGrade(santa));
+console.log(santa.graduate());
+console.log(rudolph.adjustGrade(santa));
+console.log(santa.graduate());
+
 
 ///////// END OF CHALLENGE /////////
 ///////// END OF CHALLENGE /////////
